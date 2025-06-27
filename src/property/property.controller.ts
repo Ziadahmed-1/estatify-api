@@ -6,6 +6,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
@@ -65,8 +66,8 @@ export class PropertyController {
   }
 
   @Get()
-  getPublishedProperties() {
-    return this.propertyService.getPublishedProperties();
+  getPublishedProperties(@Query('page') page: number = 1, @Query('count') count: number = 10) {
+    return this.propertyService.getPublishedProperties(page, count);
   }
 
   @Get('pending')

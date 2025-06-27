@@ -37,18 +37,29 @@ export class PropertyService {
     }
   }
 
-  async getPublishedProperties() {
+  async getPublishedProperties(page: number, count: number) {
     try {
-      const properties = await this.propertyRepo.find({
+      const [properties, total] = await this.propertyRepo.findAndCount({
         where: { isPublished: true },
         relations: ['images'],
+        skip: (page - 1) * count,
+        take: count,
+        order: { createdAt: 'DESC' },
       });
 
       if (!properties || properties.length === 0) {
         throw new NotFoundException('Properties not found');
       }
 
-      return properties;
+      return {
+        data: properties,
+        meta: {
+          total,
+          page,
+          count,
+          totalPages: Math.ceil(total / count),
+        },
+      };
     } catch (e) {
       Logger.error(e);
       throw new InternalServerErrorException('Something went wrong');
