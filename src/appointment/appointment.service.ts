@@ -51,8 +51,8 @@ export class AppointmentService {
 
       const saved = await this.appointmentRepo.save(appointment);
 
-      await this.notificationService.create(requester.id, 'Your appointment has been created.');
-      await this.notificationService.create(owner.id, 'You have a new appointment.');
+      await this.notificationService.create(requester.id, 'Your appointment has been created.', 'New Appointment');
+      await this.notificationService.create(owner.id, 'You have a new appointment.', 'New Appointment');
 
       return saved;
     } catch (error) {
@@ -85,7 +85,11 @@ export class AppointmentService {
     appointment.status = AppointmentStatus.CONFIRMED;
     const saved = await this.appointmentRepo.save(appointment);
 
-    await this.notificationService.create(appointment.requester.id, 'Your appointment request has been confirmed.');
+    await this.notificationService.create(
+      appointment.requester.id,
+      'Your appointment request has been confirmed.',
+      'Appointment Confirmed',
+    );
 
     return saved;
   }
@@ -97,7 +101,11 @@ export class AppointmentService {
     appointment.status = AppointmentStatus.REJECTED;
     const saved = await this.appointmentRepo.save(appointment);
 
-    await this.notificationService.create(appointment.requester.id, 'Your appointment request has been rejected.');
+    await this.notificationService.create(
+      appointment.requester.id,
+      'Your appointment request has been rejected.',
+      'Appointment Rejected',
+    );
 
     return saved;
   }
@@ -109,7 +117,11 @@ export class AppointmentService {
     appointment.status = AppointmentStatus.CANCELLED;
     const saved = await this.appointmentRepo.save(appointment);
 
-    await this.notificationService.create(appointment.owner.id, 'Your appointment request has been cancelled.');
+    await this.notificationService.create(
+      appointment.owner.id,
+      'Your appointment request has been cancelled.',
+      'Appointment Cancelled',
+    );
 
     return saved;
   }

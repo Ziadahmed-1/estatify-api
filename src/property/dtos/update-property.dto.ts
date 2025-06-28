@@ -17,18 +17,23 @@ export class UpdatePropertyDto {
   postingType: string;
 
   @ApiProperty()
+  @IsOptional()
   type: string;
 
   @ApiProperty()
+  @IsOptional()
   city: string;
 
   @ApiProperty()
+  @IsOptional()
   state: string;
 
   @ApiProperty()
+  @IsOptional()
   country: string;
 
   @ApiProperty()
+  @IsOptional()
   features: string[];
 
   @ApiProperty()

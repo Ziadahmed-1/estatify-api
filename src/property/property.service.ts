@@ -103,7 +103,8 @@ export class PropertyService {
       }
 
       const notificationMsg = isAdmin ? 'Property created' : 'Property submitted for approval';
-      await this.notificationService.create(user.userId, notificationMsg);
+      const notificationTitle = isAdmin ? 'Property Approved' : 'Property Pending Approval';
+      await this.notificationService.create(user.userId, notificationMsg, notificationTitle);
 
       return await this.propertyRepo.save(property);
     } catch (e) {
@@ -142,7 +143,11 @@ export class PropertyService {
       const property = await this.getProperty(id);
       property.isPublished = true;
 
-      await this.notificationService.create(property.userId, 'Your property has been approved and published.');
+      await this.notificationService.create(
+        property.userId,
+        'Your property has been approved and published.',
+        'Property Approved',
+      );
 
       return await this.propertyRepo.save(property);
     } catch (e) {

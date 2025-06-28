@@ -5,7 +5,6 @@ import { PropertyImage } from './property-image.entity';
 
 @Entity({ name: 'properties' })
 export class Property {
-  @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 

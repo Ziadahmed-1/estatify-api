@@ -13,11 +13,11 @@ export class NotificationService {
     private readonly userRepo: Repository<User>,
   ) {}
 
-  async create(userId: number, message: string) {
+  async create(userId: number, message: string, title?: string) {
     const user = await this.userRepo.findOneBy({ id: userId });
     if (!user) throw new NotFoundException('User not found');
 
-    const notification = this.notificationRepo.create({ user, message });
+    const notification = this.notificationRepo.create({ user, message, title });
     return this.notificationRepo.save(notification);
   }
 
